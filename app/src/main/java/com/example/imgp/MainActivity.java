@@ -39,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.pickedImage);
         tv = (TextView) findViewById((R.id.textView));
-        select = (Button) findViewById(R.id.button);
         predict = (Button) findViewById(R.id.button2);
-
-        select.setOnClickListener(new View.OnClickListener() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 100);
+       /* select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        */
+
         predict.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,9 +92,11 @@ public class MainActivity extends AppCompatActivity {
                     f[6]=outputFeature0.getFloatArray()[6];
                     f[7]=outputFeature0.getFloatArray()[7];
                     f[8]=outputFeature0.getFloatArray()[8];
+                    f[9]=outputFeature0.getFloatArray()[9];
 
                     String[] s={"wolf","elephant","giraffe","deer","camel","cat","cow","kangaroo","dog","pig"};
-                  /*  if(f[0]>100.0)
+                  /*
+                   if(f[0]>100.0)
                         tv.setText("Wolf");
                     else if(f[1]>100.0)
                         tv.setText("Elephant");
@@ -110,9 +116,9 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText("dog");
                     else if(f[9]>100.0)
                         tv.setText(" pig");
-
-                   */
+                  */
                int ind=indexOf(f,largest(f));
+               String x=s[ind];
                tv.setText(s[ind]);
                     model.close();
 
@@ -131,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 img = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
